@@ -34,4 +34,48 @@ public class ShiftsController : ControllerBase
 
     return Ok(shiftGiven);
   }
+
+  //modifies an existing shift
+  [HttpPut("{id}")]
+  public async Task<IActionResult> UpdateShift(int id, Shift shiftGiven)
+  {
+    if (id != shiftGiven.Id)
+    {
+      return BadRequest();
+    }
+
+    _context.Entry(shiftGiven).State = EntityState.Modified;
+
+    try
+    {
+      await _context.SaveChangesAsync();
+    }
+    catch (DbUpdateConcurrencyException)
+    {
+      if (!_context.Shifts.Any(s => s.Id == id))
+      {
+        return NotFound();
+      }
+      throw;
+    }
+    return NoContent();
+  }
+
+  //deletes an already existing shift
+  [HttpDelete("{id}")]
+  public async Task<IActionResult> DeleteShift(int id)
+  {
+    var shift = await _context.Shifts.FindAsync(id);
+
+    if (shift == null)
+    {
+      return NotFound();
+    }
+
+    _context.Shifts.Remove(shift);
+    await _context.SaveChangesAsync();
+
+    return NoContent();
+  }
+
 }
