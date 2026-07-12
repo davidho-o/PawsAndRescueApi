@@ -34,4 +34,48 @@ public class DogsController : ControllerBase
 
     return Ok(dog);
   }
+
+  //modifying an existing dog
+  [HttpPut("{id}")]
+  public async Task<IActionResult> UpdateDog(int id, Dog dogGiven)
+  {
+    if (id != dogGiven.Id)
+    {
+      return BadRequest();
+    }
+
+    _context.Entry(dogGiven).State = EntityState.Modified; // where it is modified 
+
+    try
+    {
+      await _context.SaveChangesAsync();
+    }
+    catch (DbUpdateConcurrencyException)
+    {
+      if (!_context.Dogs.Any(d => d.Id == id))
+      {
+        return NotFound(); // it was not found
+      }
+      throw;
+    }
+    return NoContent(); //nothing to show 
+  }
+
+  //deleting a dog
+  [HttpDelete("{id}")]
+  public async Task<IActionResult> DeleteDog(int id)
+  {
+    var dog = await _context.Dogs.FindAsync(id);
+
+    if (dog == null)
+    {
+      return NotFound();
+    }
+
+    _context.Dogs.Remove(dog);
+
+    await _context.SaveChangesAsync();
+
+    return NoContent();
+  }
 }
