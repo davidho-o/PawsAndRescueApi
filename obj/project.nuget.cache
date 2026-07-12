@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "zgg2NqqD1sA=",
+  "dgSpecHash": "xxY1eyPeLmI=",
   "success": true,
   "projectFilePath": "/Users/davidhora/Desktop/PawsAndRescueApi/PawsAndRescueApi.csproj",
   "expectedPackageFiles": [
@@ -21,8 +21,9 @@
     "/Users/davidhora/.nuget/packages/microsoft.entityframeworkcore.relational/10.0.9/microsoft.entityframeworkcore.relational.10.0.9.nupkg.sha512",
     "/Users/davidhora/.nuget/packages/microsoft.entityframeworkcore.sqlite/10.0.9/microsoft.entityframeworkcore.sqlite.10.0.9.nupkg.sha512",
     "/Users/davidhora/.nuget/packages/microsoft.entityframeworkcore.sqlite.core/10.0.9/microsoft.entityframeworkcore.sqlite.core.10.0.9.nupkg.sha512",
+    "/Users/davidhora/.nuget/packages/microsoft.extensions.apidescription.server/10.0.0/microsoft.extensions.apidescription.server.10.0.0.nupkg.sha512",
     "/Users/davidhora/.nuget/packages/microsoft.extensions.dependencymodel/10.0.9/microsoft.extensions.dependencymodel.10.0.9.nupkg.sha512",
-    "/Users/davidhora/.nuget/packages/microsoft.openapi/2.0.0/microsoft.openapi.2.0.0.nupkg.sha512",
+    "/Users/davidhora/.nuget/packages/microsoft.openapi/2.7.5/microsoft.openapi.2.7.5.nupkg.sha512",
     "/Users/davidhora/.nuget/packages/microsoft.visualstudio.solutionpersistence/1.0.52/microsoft.visualstudio.solutionpersistence.1.0.52.nupkg.sha512",
     "/Users/davidhora/.nuget/packages/mono.texttemplating/3.0.0/mono.texttemplating.3.0.0.nupkg.sha512",
     "/Users/davidhora/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
@@ -30,6 +31,10 @@
     "/Users/davidhora/.nuget/packages/sqlitepclraw.core/2.1.11/sqlitepclraw.core.2.1.11.nupkg.sha512",
     "/Users/davidhora/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.1.11/sqlitepclraw.lib.e_sqlite3.2.1.11.nupkg.sha512",
     "/Users/davidhora/.nuget/packages/sqlitepclraw.provider.e_sqlite3/2.1.11/sqlitepclraw.provider.e_sqlite3.2.1.11.nupkg.sha512",
+    "/Users/davidhora/.nuget/packages/swashbuckle.aspnetcore/10.2.3/swashbuckle.aspnetcore.10.2.3.nupkg.sha512",
+    "/Users/davidhora/.nuget/packages/swashbuckle.aspnetcore.swagger/10.2.3/swashbuckle.aspnetcore.swagger.10.2.3.nupkg.sha512",
+    "/Users/davidhora/.nuget/packages/swashbuckle.aspnetcore.swaggergen/10.2.3/swashbuckle.aspnetcore.swaggergen.10.2.3.nupkg.sha512",
+    "/Users/davidhora/.nuget/packages/swashbuckle.aspnetcore.swaggerui/10.2.3/swashbuckle.aspnetcore.swaggerui.10.2.3.nupkg.sha512",
     "/Users/davidhora/.nuget/packages/system.codedom/6.0.0/system.codedom.6.0.0.nupkg.sha512",
     "/Users/davidhora/.nuget/packages/system.composition/9.0.0/system.composition.9.0.0.nupkg.sha512",
     "/Users/davidhora/.nuget/packages/system.composition.attributedmodel/9.0.0/system.composition.attributedmodel.9.0.0.nupkg.sha512",
@@ -39,18 +44,6 @@
     "/Users/davidhora/.nuget/packages/system.composition.typedparts/9.0.0/system.composition.typedparts.9.0.0.nupkg.sha512"
   ],
   "logs": [
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'Microsoft.OpenApi' 2.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-v5pm-xwqc-g5wc",
-      "projectPath": "/Users/davidhora/Desktop/PawsAndRescueApi/PawsAndRescueApi.csproj",
-      "warningLevel": 1,
-      "filePath": "/Users/davidhora/Desktop/PawsAndRescueApi/PawsAndRescueApi.csproj",
-      "libraryId": "Microsoft.OpenApi",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    },
     {
       "code": "NU1903",
       "level": "Warning",
