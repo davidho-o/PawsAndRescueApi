@@ -7,6 +7,8 @@ builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlite("Data Source = shelter.db")
 );
 
+builder.Services.AddControllers();
+
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -39,6 +41,8 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast");
+
+app.MapControllers();
 
 app.Run();
 
