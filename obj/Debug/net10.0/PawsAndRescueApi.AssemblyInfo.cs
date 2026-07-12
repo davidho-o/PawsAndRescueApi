@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PawsAndRescueApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0d7f6f04f3e9d3334531c209109b0038a1b936a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+916a5a9a919c933f4429907601778c77309c93e7")]
 [assembly: System.Reflection.AssemblyProductAttribute("PawsAndRescueApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PawsAndRescueApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
