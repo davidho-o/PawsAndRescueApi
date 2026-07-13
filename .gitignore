@@ -1,0 +1,8 @@
+# baza de date SQLite
+*.db
+*.db-shm
+*.db-wal
+
+# foldere generate de sistem pe care nu vrem sa le urcam
+bin/
+obj/
