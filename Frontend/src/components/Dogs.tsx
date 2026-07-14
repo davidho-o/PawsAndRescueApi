@@ -51,6 +51,19 @@ export default function Dogs() {
       .catch((error) => console.error(error));
   };
 
+  const handleDeleteDog = (id: number) => {
+    if (!window.confirm("Are you sure you want to delete this dog?")) return;
+
+    fetch(`http://localhost:5230/api/Dogs/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) setDogs(dogs.filter((dog) => dog.id !== id));
+        else console.error("The server has denied the deleting of the dog.");
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
     <div>
       <div
@@ -111,13 +124,44 @@ export default function Dogs() {
       <p>
         Avem <strong>{dogs.length}</strong> câini în baza de date.
       </p>
-      <ul>
+      <ul style={{ listStyleType: "none", padding: 0 }}>
         {dogs.map((dog) => (
-          <li key={dog.id} style={{ marginBottom: "10px" }}>
-            <strong>{dog.name}</strong> ({dog.breed}) <br />
-            <small>
-              <em>{dog.temperament}</em>
-            </small>
+          <li
+            key={dog.id}
+            style={{
+              marginBottom: "10px",
+              padding: "12px",
+              border: "2px solid #ddd",
+              borderRadius: "6px",
+              maxWidth: "400px",
+              display: "flex",
+              justifyContent: "space-between", //text right and button left
+              alignItems: "center",
+            }}
+          >
+            <div>
+              <strong>{dog.name}</strong> ({dog.breed}) <br />
+              <small style={{ color: "#666" }}>
+                <em>{dog.temperament}</em>
+                <br></br>
+                <em>{dog.notes}</em>
+              </small>
+            </div>
+
+            <button
+              onClick={() => handleDeleteDog(dog.id)}
+              style={{
+                backgroundColor: "#ff4d4d",
+                color: "white",
+                border: "none",
+                padding: "6px 12px",
+                borderRadius: "4px",
+                cursor: "pointer",
+                fontWeight: "bold",
+              }}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
