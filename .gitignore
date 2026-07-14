@@ -8,3 +8,6 @@ bin/
 obj/
 
 Frontend/node_modules/
+
+.DS_Store
+**/.DS_Store
