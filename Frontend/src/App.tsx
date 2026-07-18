@@ -1,5 +1,6 @@
 import Dogs from "./components/Dogs";
 import ShelterTasks from "./components/ShelterTasks";
+import Shifts from "./components/Shifts";
 
 function App() {
   return (
@@ -8,6 +9,8 @@ function App() {
       <Dogs />
       <br></br>
       <ShelterTasks />
+      <br></br>
+      <Shifts />
       <br></br>
     </div>
   );
