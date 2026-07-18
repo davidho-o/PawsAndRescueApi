@@ -61,12 +61,12 @@ export default function Dogs() {
     })
       .then((response) => {
         if (response.ok) setDogs(dogs.filter((dog) => dog.id !== id));
-        else console.error("The server has denied the deleting of the dog.");
+        else console.error("The server has denied deleting of the dog.");
       })
       .catch((error) => console.error(error));
   };
 
-  const handleSaveEdit = (e: SyntheticEvent) => {
+  const handleSaveEditDog = (e: SyntheticEvent) => {
     e.preventDefault();
 
     if (!editingDog) return;
@@ -236,7 +236,7 @@ export default function Dogs() {
             <h3>Modify dog</h3>
 
             <form
-              onSubmit={handleSaveEdit}
+              onSubmit={handleSaveEditDog}
               style={{ display: "flex", flexDirection: "column", gap: "10px" }}
             >
               <input
