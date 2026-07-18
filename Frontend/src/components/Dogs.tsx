@@ -105,14 +105,14 @@ export default function Dogs() {
         >
           <input
             type="text"
-            placeholder="Nume..."
+            placeholder="Name..."
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <input
             type="text"
-            placeholder="Rasă..."
+            placeholder="Breed..."
             required
             value={breed}
             onChange={(e) => setBreed(e.target.value)}
@@ -125,7 +125,7 @@ export default function Dogs() {
           />
           <input
             type="text"
-            placeholder="Notițe..."
+            placeholder="Notes..."
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
           />
@@ -145,7 +145,7 @@ export default function Dogs() {
       </div>
 
       <p>
-        Avem <strong>{dogs.length}</strong> câini în baza de date.
+        We have <strong>{dogs.length}</strong> dogs in the database
       </p>
       <ul style={{ listStyleType: "none", padding: 0, gap: "10px" }}>
         {dogs.map((dog) => (

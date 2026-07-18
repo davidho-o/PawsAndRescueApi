@@ -8,9 +8,9 @@ public class ShelterTask
 
   public bool IsCompleted { get; set; } = false;
 
-  // de ce tura apartine acest task
+  // what shift contains this id
   public int ShiftId { get; set; }
 
-  // la ce caine se refera task-ul
+  // what dog does this tasl cater to
   public int DogId { get; set; }
 }
