@@ -1,6 +1,7 @@
 import Dogs from "./components/Dogs";
 import ShelterTasks from "./components/ShelterTasks";
 import Shifts from "./components/Shifts";
+import Users from "./components/Users";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <br></br>
       <Shifts />
       <br></br>
+      <Users />
     </div>
   );
 }
