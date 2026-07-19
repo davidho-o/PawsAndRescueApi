@@ -1,4 +1,5 @@
 import { useState, useEffect, type SyntheticEvent } from "react";
+import "./ShelterTasks.css"; // <-- Importăm stilurile
 
 interface ShelterTask {
   id: number;
@@ -17,7 +18,6 @@ export default function ShelterTasks() {
 
   const [editingTask, setEditingTask] = useState<ShelterTask | null>(null);
 
-  //used to load the initial list of tasks
   useEffect(() => {
     fetch("http://localhost:5230/api/ShelterTasks")
       .then((response) => response.json())
@@ -25,7 +25,6 @@ export default function ShelterTasks() {
       .catch((error) => console.error(error));
   }, []);
 
-  //function that allows to (un)check a task
   const handleToggleCheck = (task: ShelterTask) => {
     const updatedTask = { ...task, isCompleted: !task.isCompleted };
 
@@ -48,7 +47,6 @@ export default function ShelterTasks() {
       });
   };
 
-  //function that handles the adding of a task
   const handleAddTask = (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -74,7 +72,6 @@ export default function ShelterTasks() {
       .catch((error) => console.error(error));
   };
 
-  //function that handles the deleting of a task
   const handleDeleteTask = (id: number) => {
     if (!window.confirm("Are you sure you want to delete this task?")) return;
 
@@ -91,7 +88,6 @@ export default function ShelterTasks() {
       .catch((error) => console.error(error));
   };
 
-  //allows for changing the description of a task
   const handleSaveEditTask = (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -116,66 +112,44 @@ export default function ShelterTasks() {
   };
 
   return (
-    <div>
-      <p>We have {shelterTasks.length} tasks to complete.</p>
+    <div className="tasks-container">
+      <h2 className="section-title">
+        We have {shelterTasks.length} tasks to complete.
+      </h2>
 
-      <ul style={{ listStyleType: "none", padding: 0, gap: "10px" }}>
+      {/* TASK LIST */}
+      <ul className="tasks-list">
         {shelterTasks.map((shelterTask) => (
           <li
             key={shelterTask.id}
-            style={{
-              marginBottom: "10px",
-              padding: "10px",
-              border: "1px solid #ddd",
-              borderRadius: "6px",
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-            }}
+            className={`task-card ${shelterTask.isCompleted ? "completed" : ""}`}
           >
             <input
               type="checkbox"
+              className="task-checkbox"
               checked={shelterTask.isCompleted}
               onChange={() => handleToggleCheck(shelterTask)}
-              style={{ transform: "scale(1.5)", cursor: "pointer" }}
             />
-            <div
-              style={{
-                textDecoration: shelterTask.isCompleted
-                  ? "line-through"
-                  : "none",
-              }}
-            >
-              <strong>{shelterTask.description}</strong>
-              <br />
-              <small style={{ color: "#666" }}>
+
+            <div className="task-content">
+              <span className="task-description">
+                {shelterTask.description}
+              </span>
+              <span className="task-meta">
                 Dog ID: {shelterTask.dogId} | Shift: {shelterTask.shiftId}
-              </small>
+              </span>
+            </div>
+
+            <div className="btn-group">
               <button
+                className="btn btn-danger"
                 onClick={() => handleDeleteTask(shelterTask.id)}
-                style={{
-                  backgroundColor: "#ff4d4d",
-                  color: "white",
-                  border: "none",
-                  padding: "6px 12px",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                }}
               >
                 Delete
               </button>
-
               <button
+                className="btn btn-primary"
                 onClick={() => setEditingTask(shelterTask)}
-                style={{
-                  backgroundColor: "#2196F3",
-                  color: "white",
-                  border: "none",
-                  padding: "6px 12px",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                }}
               >
                 Edit
               </button>
@@ -183,81 +157,59 @@ export default function ShelterTasks() {
           </li>
         ))}
       </ul>
-      <div
-        style={{
-          border: "1px solid #ccc",
-          padding: "15px",
-          marginBottom: "20px",
-          borderRadius: "8px",
-          maxWidth: "400px",
-        }}
-      >
-        <h3>Add a new task</h3>
-        <form
-          onSubmit={handleAddTask}
-          style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-        >
+
+      {/* ADD SHIFT FORM */}
+      <div className="form-container">
+        <h3 style={{ marginTop: 0, color: "var(--color-teal-dark)" }}>
+          Add a new task
+        </h3>
+        <form onSubmit={handleAddTask} className="form-layout">
           <input
+            className="custom-input"
             type="text"
             placeholder="Description..."
             required
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <input
-            type="number"
-            placeholder="Shift ID..."
-            value={shiftId === 0 ? "" : shiftId}
-            onChange={(e) => setShiftId(Number(e.target.value))}
-          />
-          <input
-            type="number"
-            placeholder="Dog ID..."
-            value={dogId === 0 ? "" : dogId}
-            onChange={(e) => setDogId(Number(e.target.value))}
-          />
+
+          <div className="input-row">
+            <input
+              className="custom-input"
+              type="number"
+              placeholder="Shift ID..."
+              value={shiftId === 0 ? "" : shiftId}
+              onChange={(e) => setShiftId(Number(e.target.value))}
+            />
+            <input
+              className="custom-input"
+              type="number"
+              placeholder="Dog ID..."
+              value={dogId === 0 ? "" : dogId}
+              onChange={(e) => setDogId(Number(e.target.value))}
+            />
+          </div>
+
           <button
             type="submit"
-            style={{
-              padding: "10px",
-              backgroundColor: "#4CAF50",
-              color: "white",
-              border: "none",
-              cursor: "pointer",
-            }}
+            className="btn btn-primary"
+            style={{ marginTop: "10px" }}
           >
             + Add Task
           </button>
         </form>
       </div>
+
+      {/* EDIT SHIFT POP-UP */}
       {editingTask && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 1000,
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "white",
-              padding: "20px",
-              borderRadius: "8px",
-            }}
-          >
-            <h3>Modify task</h3>
-            <form
-              onSubmit={handleSaveEditTask}
-              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-            >
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3 style={{ marginTop: 0, color: "var(--color-teal-dark)" }}>
+              Modify task
+            </h3>
+            <form onSubmit={handleSaveEditTask} className="form-layout">
               <input
+                className="custom-input"
                 type="text"
                 required
                 placeholder="Description..."
@@ -269,28 +221,20 @@ export default function ShelterTasks() {
                   })
                 }
               />
-              <div style={{ display: "flex", gap: "10px" }}>
+
+              <div className="btn-group-row">
                 <button
                   type="submit"
-                  style={{
-                    padding: "10px",
-                    backgroundColor: "#2196F3",
-                    color: "white",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
+                  className="btn btn-primary"
+                  style={{ flex: 1 }}
                 >
                   Save
                 </button>
                 <button
                   type="button"
+                  className="btn btn-secondary"
+                  style={{ flex: 1 }}
                   onClick={() => setEditingTask(null)}
-                  style={{
-                    padding: "10px",
-                    backgroundColor: "#ccc",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
                 >
                   Cancel
                 </button>

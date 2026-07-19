@@ -1,4 +1,5 @@
 import { useState, useEffect, type SyntheticEvent } from "react";
+import "./Shifts.css"; // <-- Importăm noul CSS
 
 const CURRENT_LOGGED_IN_VOLUNTEER_ID = 1; // hardcoded the volunteer id
 
@@ -97,130 +98,90 @@ export default function Shifts() {
   };
 
   return (
-    <div>
-      <h3>We have {shifts.length} shifts at the moment.</h3>
-      <div
-        style={{
-          border: "1px solid #ccc",
-          padding: "15px",
-          marginBottom: "20px",
-          borderRadius: "8px",
-          maxWidth: "400px",
-        }}
-      >
-        <form
-          onSubmit={handleAddShift}
-          style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-        >
-          <h3>Add a new shift</h3>
-          <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+    <div className="shifts-container">
+      <h2 className="section-title">
+        We have {shifts.length} shifts at the moment.
+      </h2>
+
+      {/* ADD FORM */}
+      <div className="form-container">
+        <form onSubmit={handleAddShift} className="form-layout">
+          <h3 style={{ marginTop: 0, color: "var(--color-teal-dark)" }}>
+            Add a new shift
+          </h3>
+
+          <div className="input-group">
             <p>Date: </p>
             <input
               type="date"
               required
+              className="custom-input"
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />
           </div>
-          <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+
+          <div className="input-group">
             <p>Starting Hour: </p>
             <input
               type="time"
               required
+              className="custom-input"
               value={hourBegin}
               onChange={(e) => setHourBegin(e.target.value)}
             />
           </div>
-          <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+
+          <div className="input-group">
             <p>Ending Hour: </p>
             <input
               type="time"
               required
+              className="custom-input"
               value={hourEnd}
               onChange={(e) => setHourEnd(e.target.value)}
             />
           </div>
+
           <button
             type="submit"
-            style={{
-              padding: "10px",
-              backgroundColor: "#4CAF50",
-              color: "white",
-              border: "none",
-              cursor: "pointer",
-            }}
+            className="btn btn-primary"
+            style={{ marginTop: "10px" }}
           >
             Add shift
           </button>
         </form>
       </div>
-      <ul style={{ listStyleType: "none", padding: 0, gap: "10px" }}>
+
+      {/* SHIFT LIST */}
+      <ul className="shifts-list">
         {shifts.map((shift) => (
-          <li
-            key={shift.id}
-            style={{
-              marginBottom: "10px",
-              padding: "10px",
-              border: "1px solid #ddd",
-              borderRadius: "6px",
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-            }}
-          >
-            <h3>Shift #{shift.id}</h3>
-            <p
-              style={{
-                backgroundColor: "#83d",
-                padding: "5px",
-                color: "white",
-                borderRadius: "4px",
-              }}
-            >
-              {new Date(shift.date).toLocaleDateString()}
-            </p>
-            <p>
-              {shift.hourBegin} - {shift.hourEnd}
-            </p>
-            <p
-              style={{
-                backgroundColor: shift.isApproved ? "#4CAF50" : "#ff9800",
-                color: "white",
-                padding: "4px 8px",
-                borderRadius: "12px",
-                fontSize: "12px",
-                fontWeight: "bold",
-              }}
-            >
-              {shift.isApproved ? "Approved" : "Pending"}
-            </p>
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-            >
+          <li key={shift.id} className="shift-card">
+            <div className="shift-info">
+              <h3>Shift #{shift.id}</h3>
+              <span className="badge badge-date">
+                {new Date(shift.date).toLocaleDateString()}
+              </span>
+              <span className="time-text">
+                {shift.hourBegin} - {shift.hourEnd}
+              </span>
+              <span
+                className={`badge ${shift.isApproved ? "badge-approved" : "badge-pending"}`}
+              >
+                {shift.isApproved ? "Approved" : "Pending"}
+              </span>
+            </div>
+
+            <div className="btn-group">
               <button
+                className="btn btn-danger"
                 onClick={() => handleDeleteShift(shift.id)}
-                style={{
-                  backgroundColor: "#ff4d4d",
-                  color: "white",
-                  border: "none",
-                  padding: "6px 12px",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                }}
               >
                 Delete
               </button>
               <button
+                className="btn btn-primary"
                 onClick={() => setEditingShift(shift)}
-                style={{
-                  backgroundColor: "#2196F3",
-                  color: "white",
-                  border: "none",
-                  padding: "6px 12px",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                }}
               >
                 Edit
               </button>
@@ -228,35 +189,19 @@ export default function Shifts() {
           </li>
         ))}
       </ul>
+
+      {/* Edit pop-up */}
       {editingShift && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 1000,
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "white",
-              padding: "20px",
-              borderRadius: "8px",
-            }}
-          >
-            <h3>Modify shift</h3>
-            <form
-              onSubmit={handleSaveEditShift}
-              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-            >
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3 style={{ marginTop: 0, color: "var(--color-teal-dark)" }}>
+              Modify shift
+            </h3>
+
+            <form onSubmit={handleSaveEditShift} className="form-layout">
               <input
                 type="date"
+                className="custom-input"
                 value={editingShift.date.split("T")[0]}
                 onChange={(e) =>
                   setEditingShift({
@@ -267,6 +212,7 @@ export default function Shifts() {
               />
               <input
                 type="time"
+                className="custom-input"
                 value={editingShift.hourBegin}
                 onChange={(e) =>
                   setEditingShift({
@@ -277,6 +223,7 @@ export default function Shifts() {
               />
               <input
                 type="time"
+                className="custom-input"
                 value={editingShift.hourEnd}
                 onChange={(e) =>
                   setEditingShift({
@@ -285,13 +232,10 @@ export default function Shifts() {
                   })
                 }
               />
+
               <label
-                style={{
-                  display: "flex",
-                  gap: "10px",
-                  alignItems: "center",
-                  fontWeight: "bold",
-                }}
+                className="input-group"
+                style={{ cursor: "pointer", marginTop: "10px" }}
               >
                 <input
                   type="checkbox"
@@ -302,32 +246,24 @@ export default function Shifts() {
                       isApproved: e.target.checked,
                     })
                   }
-                  style={{ transform: "scale(1.2)", cursor: "pointer" }}
+                  style={{ width: "18px", height: "18px" }}
                 />
                 Manager Approval
               </label>
-              <div style={{ display: "flex", gap: "10px" }}>
+
+              <div className="btn-group" style={{ marginTop: "15px" }}>
                 <button
                   type="submit"
-                  style={{
-                    padding: "10px",
-                    backgroundColor: "#2196F3",
-                    color: "white",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
+                  className="btn btn-primary"
+                  style={{ flex: 1 }}
                 >
                   Save
                 </button>
                 <button
                   type="button"
+                  className="btn btn-secondary"
+                  style={{ flex: 1 }}
                   onClick={() => setEditingShift(null)}
-                  style={{
-                    padding: "10px",
-                    backgroundColor: "#ccc",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
                 >
                   Cancel
                 </button>

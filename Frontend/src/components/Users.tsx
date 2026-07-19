@@ -1,4 +1,5 @@
 import { useEffect, useState, type SyntheticEvent } from "react";
+import "./Users.css";
 
 interface User {
   id: number;
@@ -59,7 +60,7 @@ export default function Users() {
   const handleDeleteUser = (id: number) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
-    fetch(`http://localhost:5230/api/users/${id}`, { method: "DELETE" })
+    fetch(`http://localhost:5230/api/Users/${id}`, { method: "DELETE" })
       .then((response) => {
         if (response.ok) {
           setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
@@ -92,72 +93,77 @@ export default function Users() {
   };
 
   return (
-    <div>
-      <h3>We currently have {users.length} users.</h3>
-      <ul style={{ listStyleType: "none", padding: 0, gap: "10px" }}>
-        {users.map((user) => (
-          <li
-            key={user.id}
-            style={{
-              marginBottom: "10px",
-              padding: "10px",
-              border: "1px solid #ddd",
-              borderRadius: "6px",
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-            }}
-          >
-            {user.name}
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-            >
-              <button
-                onClick={() => handleDeleteUser(user.id)}
-                style={{
-                  backgroundColor: "#ff4d4d",
-                  color: "white",
-                  border: "none",
-                  padding: "6px 12px",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                }}
-              >
-                Delete
-              </button>
-              <button
-                onClick={() => setEditingUser(user)}
-                style={{
-                  backgroundColor: "#2196F3",
-                  color: "white",
-                  border: "none",
-                  padding: "6px 12px",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                }}
-              >
-                Edit
-              </button>
-            </div>
-          </li>
-        ))}
+    <div className="users-container">
+      <h2>We currently have {users.length} users.</h2>
+
+      {/* MANAGERS / COORDINATORS */}
+      <h3 className="section-title">Managers</h3>
+      <ul className="users-list">
+        {users
+          .filter((user) => user.role === 1)
+          .map((user) => (
+            <li key={user.id} className="user-card">
+              <span className="user-info">
+                <strong>{user.name}</strong> <br />
+                <span style={{ fontSize: "0.9rem", opacity: 0.8 }}>
+                  {user.email}
+                </span>
+              </span>
+              <div className="btn-group">
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleDeleteUser(user.id)}
+                >
+                  Delete
+                </button>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => setEditingUser(user)}
+                >
+                  Edit
+                </button>
+              </div>
+            </li>
+          ))}
       </ul>
-      <div
-        style={{
-          border: "1px solid #ccc",
-          padding: "15px",
-          marginBottom: "20px",
-          borderRadius: "8px",
-          maxWidth: "400px",
-        }}
-      >
+
+      {/* VOLUNTEERS */}
+      <h3 className="section-title">Volunteers</h3>
+      <ul className="users-list">
+        {users
+          .filter((user) => user.role === 0)
+          .map((user) => (
+            <li key={user.id} className="user-card">
+              <span className="user-info">
+                <strong>{user.name}</strong> <br />
+                <span style={{ fontSize: "0.9rem", opacity: 0.8 }}>
+                  {user.email}
+                </span>
+              </span>
+              <div className="btn-group">
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleDeleteUser(user.id)}
+                >
+                  Delete
+                </button>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => setEditingUser(user)}
+                >
+                  Edit
+                </button>
+              </div>
+            </li>
+          ))}
+      </ul>
+
+      {/* ADD USER FORM */}
+      <div className="form-container">
         <h3>Add a new user</h3>
-        <form
-          style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-          onSubmit={handleAddUser}
-        >
+        <form className="form-layout" onSubmit={handleAddUser}>
           <input
+            className="custom-input"
             required
             type="text"
             placeholder="Name..."
@@ -165,61 +171,37 @@ export default function Users() {
             onChange={(e) => setName(e.target.value)}
           />
           <input
+            className="custom-input"
             required
-            type="text"
+            type="email"
             placeholder="Email..."
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
+            className="custom-input"
             required
-            type="text"
+            type="password"
             placeholder="Password..."
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button
-            type="submit"
-            style={{
-              padding: "10px",
-              backgroundColor: "#4CAF50",
-              color: "white",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
+          <button type="submit" className="btn btn-primary">
             Add user
           </button>
         </form>
       </div>
+
+      {/* EDIT USER POPUP */}
       {editingUser && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 1000,
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "white",
-              padding: "20px",
-              borderRadius: "8px",
-            }}
-          >
-            <h3>Modify User</h3>
-            <form
-              onSubmit={handleSaveEditUser}
-              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-            >
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3 style={{ marginTop: 0, color: "var(--color-teal-dark)" }}>
+              Modify User
+            </h3>
+            <form className="form-layout" onSubmit={handleSaveEditUser}>
               <input
+                className="custom-input"
                 type="text"
                 placeholder="Name..."
                 value={editingUser.name}
@@ -231,7 +213,8 @@ export default function Users() {
                 }
               />
               <input
-                type="text"
+                className="custom-input"
+                type="email"
                 placeholder="Email..."
                 value={editingUser.email}
                 onChange={(e) =>
@@ -241,40 +224,34 @@ export default function Users() {
                   })
                 }
               />
-              <input
-                type="checkbox"
-                checked={Boolean(editingUser.role)}
-                onChange={(e) =>
-                  setEditingUser({
-                    ...editingUser,
-                    role: Number(e.target.checked),
-                  })
-                }
-                style={{ transform: "scale(1.2)", cursor: "pointer" }}
-              />
-              Promote to manager
-              <div style={{ display: "flex", gap: "10px" }}>
+              <label className="checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  checked={Boolean(editingUser.role)}
+                  onChange={(e) =>
+                    setEditingUser({
+                      ...editingUser,
+                      role: Number(e.target.checked),
+                    })
+                  }
+                  style={{ width: "18px", height: "18px", cursor: "pointer" }}
+                />
+                Promote to manager
+              </label>
+
+              <div className="btn-group" style={{ marginTop: "10px" }}>
                 <button
                   type="submit"
-                  style={{
-                    padding: "10px",
-                    backgroundColor: "#2196F3",
-                    color: "white",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
+                  className="btn btn-primary"
+                  style={{ flex: 1 }}
                 >
                   Save
                 </button>
                 <button
                   type="button"
+                  className="btn btn-secondary"
+                  style={{ flex: 1 }}
                   onClick={() => setEditingUser(null)}
-                  style={{
-                    padding: "10px",
-                    backgroundColor: "#ccc",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
                 >
                   Cancel
                 </button>

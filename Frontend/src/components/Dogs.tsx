@@ -1,4 +1,5 @@
 import { useState, useEffect, type SyntheticEvent } from "react";
+import "./Dogs.css"; // <-- Importăm stilurile noastre
 
 interface Dog {
   id: number;
@@ -88,122 +89,33 @@ export default function Dogs() {
   };
 
   return (
-    <div>
-      <div
-        style={{
-          border: "1px solid #ccc",
-          padding: "15px",
-          marginBottom: "20px",
-          borderRadius: "8px",
-          maxWidth: "400px",
-        }}
-      >
-        <h3>Add a new dog</h3>
-        <form
-          onSubmit={handleAddDog}
-          style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-        >
-          <input
-            type="text"
-            placeholder="Name..."
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Breed..."
-            required
-            value={breed}
-            onChange={(e) => setBreed(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Temperament..."
-            value={temperament}
-            onChange={(e) => setTemperament(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Notes..."
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-          />
-          <button
-            type="submit"
-            style={{
-              padding: "10px",
-              backgroundColor: "#4CAF50",
-              color: "white",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            + Add Dog
-          </button>
-        </form>
-      </div>
+    <div className="dogs-container">
+      <h3 className="section-title">
+        We have {dogs.length} dogs in the database
+      </h3>
 
-      <p>
-        We have <strong>{dogs.length}</strong> dogs in the database
-      </p>
-      <ul style={{ listStyleType: "none", padding: 0, gap: "10px" }}>
+      <ul className="dogs-list">
         {dogs.map((dog) => (
-          <li
-            key={dog.id}
-            style={{
-              marginBottom: "10px",
-              padding: "12px",
-              border: "2px solid #ddd",
-              borderRadius: "6px",
-              maxWidth: "400px",
-              display: "flex",
-              justifyContent: "space-between", //text right and button left
-              alignItems: "center",
-              gap: "30px",
-            }}
-          >
-            <div>
-              <strong>{dog.name}</strong> ({dog.breed}) <br />
-              <small style={{ color: "#666" }}>
+          <li key={dog.id} className="dog-card">
+            <div className="dog-info">
+              <strong>{dog.name}</strong> ({dog.breed})
+              <small>
                 <em>{dog.temperament}</em>
-                <br></br>
+                <br />
                 <em>{dog.notes}</em>
               </small>
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-              }}
-            >
+            <div className="btn-group">
               <button
                 onClick={() => handleDeleteDog(dog.id)}
-                style={{
-                  backgroundColor: "#ff4d4d",
-                  color: "white",
-                  border: "none",
-                  padding: "6px 12px",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                }}
+                className="btn btn-danger"
               >
                 Delete
               </button>
-
               <button
                 onClick={() => setEditingDog(dog)}
-                style={{
-                  backgroundColor: "#2196F3",
-                  color: "white",
-                  border: "none",
-                  padding: "6px 12px",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                }}
+                className="btn btn-primary"
               >
                 Edit
               </button>
@@ -211,35 +123,62 @@ export default function Dogs() {
           </li>
         ))}
       </ul>
-      {editingDog && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 1000,
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "white",
-              padding: "20px",
-              borderRadius: "8px",
-            }}
-          >
-            <h3>Modify dog</h3>
 
-            <form
-              onSubmit={handleSaveEditDog}
-              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-            >
+      <div className="form-container">
+        <h3 style={{ marginTop: 0, color: "var(--color-teal-dark)" }}>
+          Add a new dog
+        </h3>
+        <form onSubmit={handleAddDog} className="form-layout">
+          <input
+            className="custom-input"
+            type="text"
+            placeholder="Name..."
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            className="custom-input"
+            type="text"
+            placeholder="Breed..."
+            required
+            value={breed}
+            onChange={(e) => setBreed(e.target.value)}
+          />
+          <input
+            className="custom-input"
+            type="text"
+            placeholder="Temperament..."
+            value={temperament}
+            onChange={(e) => setTemperament(e.target.value)}
+          />
+          <input
+            className="custom-input"
+            type="text"
+            placeholder="Notes..."
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="btn btn-primary"
+            style={{ marginTop: "10px" }}
+          >
+            + Add Dog
+          </button>
+        </form>
+      </div>
+
+      {editingDog && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3 style={{ marginTop: 0, color: "var(--color-teal-dark)" }}>
+              Modify dog
+            </h3>
+
+            <form onSubmit={handleSaveEditDog} className="form-layout">
               <input
+                className="custom-input"
                 type="text"
                 required
                 value={editingDog.name}
@@ -248,6 +187,7 @@ export default function Dogs() {
                 }
               />
               <input
+                className="custom-input"
                 type="text"
                 required
                 value={editingDog.breed}
@@ -256,6 +196,7 @@ export default function Dogs() {
                 }
               />
               <input
+                className="custom-input"
                 type="text"
                 value={editingDog.temperament}
                 onChange={(e) =>
@@ -263,6 +204,7 @@ export default function Dogs() {
                 }
               />
               <input
+                className="custom-input"
                 type="text"
                 value={editingDog.notes}
                 onChange={(e) =>
@@ -270,10 +212,23 @@ export default function Dogs() {
                 }
               />
 
-              <button type="submit">Save</button>
-              <button type="button" onClick={() => setEditingDog(null)}>
-                Cancel
-              </button>
+              <div className="btn-group-row">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  style={{ flex: 1 }}
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  style={{ flex: 1 }}
+                  onClick={() => setEditingDog(null)}
+                >
+                  Cancel
+                </button>
+              </div>
             </form>
           </div>
         </div>
