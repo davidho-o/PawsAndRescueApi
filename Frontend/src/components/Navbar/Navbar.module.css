@@ -24,16 +24,16 @@
 .navItem {
   text-decoration: none;
   font-size: 0.95rem;
-  color: var(--text-secondary, #666666);
+  color: var(--color-teal-light, --color-teal-dark);
   font-weight: 500;
   transition: color 0.2s ease;
 }
 
 .navItem:hover {
-  color: var(--text-primary, #111111);
+  color: var(--text-primary, --color-teal-dark);
 }
 
 .active {
-  color: var(--brand-color, #0070f3);
+  color: var(--brand-color, --color-teal-dark);
   font-weight: 600;
 }
